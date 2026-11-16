@@ -82,6 +82,26 @@ def lu_factorisation(A):
 
     # TODO: fill in L and U
 
+    for i in range (n):
+        for j in range (i , n):
+            sumforU = 0
+            for k in range (i):
+                sumforU += L[i, k] * U[k , j]
+            U[i , j] = A[i, j] - sumforU
+
+        L[i,i] = 1
+
+
+        for j in range (i+1, n):
+            sumforL = 0
+            for k in range(i):
+                sumforL += L[j, k] * U[k, i]
+
+            if U[i, i] == 0:
+                raise Exception("Zero Encountered, this method is not possible without a pivot")
+            
+            L[j, i] = (A[j, i] - sum_L) / U[i, i]
+
     return L, U
 
 
@@ -189,6 +209,10 @@ def runtime_comparison():
     # sizes = [2**j for j in range(1, 8)]
     # ...
     # plt.savefig("plot.png")
+
+    import time
+    from matplotlib import pyplot as plt
+    
 
 
 if __name__ == "__main__":
