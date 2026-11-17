@@ -100,7 +100,7 @@ def lu_factorisation(A):
             if U[i, i] == 0:
                 raise Exception("Zero Encountered, this method is not possible without a pivot")
             
-            L[j, i] = (A[j, i] - sum_L) / U[i, i]
+            L[j, i] = (A[j, i] - sumforL) / U[i, i]
 
     return L, U
 
@@ -213,6 +213,36 @@ def runtime_comparison():
     import time
     from matplotlib import pyplot as plt
     
+    LUTiminings = []
+    GaussianTimings = []
+
+    for n in sizes:
+        A, b, x_true = generate_safe_system(n)
+
+        start = time.perf_counter()
+        L, U = lu_factorisation(A)
+        end = time.perf_counter()
+
+        LUTiminings.append(end - start)
+
+        Acopy = A.copy()
+        Bcopy = B.copy()
+
+        start = time.perf_counter()
+        gaussian_elimination(Acopy, Bcopy)
+        end  = time.perf_counter()
+
+        GaussianTimings.append(end-start)
+
+    #plotting:
+    plt.loglog(sizes, LUTiminings, marker = 'o' , label = 'LU Factorisation')
+    plt.loglog(sizes, GaussianTimings, marker = 's' , label = 'Guassian Elimination')
+    plt.xlabel('Matrix size')
+    plt.ylabel('Execution Times')
+    plt.title('A Runtime Comparison of LU Factorisation and Guassian Elimination')
+    plt.legend()
+    plt.savefig('plot.png')
+
 
 
 if __name__ == "__main__":
