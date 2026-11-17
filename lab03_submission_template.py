@@ -216,6 +216,7 @@ def runtime_comparison():
     LUTiminings = []
     GaussianTimings = []
 
+    size = [2**j for j in range (1, 8)]
     for n in sizes:
         A, b, x_true = generate_safe_system(n)
 
