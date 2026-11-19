@@ -58,9 +58,9 @@ def gram_schmidt_qr(A):
         Q[:, j] = v / R[j, j]
 
     '''
-    Im including a long winded explanation of this so i know what i mean
+    Im including a long winded explanation as i worked through this as it was quite complicated
     For the TODO section of this function I started off with a loop using j as my value that is going to loop n times (the number of columns in A). So I am looping through the columns in short. 
-By using j (which automatically starts at 0) I make a copy of the matrix column so as not to edit the original matrix, which then allows me to carry on with my algorithm.
+By using j (which automatically starts at 0) I make a copy of the matrix column so as not to edit the original matrix (also just made it easier to access), which then allows me to carry on with my algorithm.
 As n is 2 (meaning j will do 0 then 1), on the first pass of the first for loop, the inner loop does not run, which is perfect because the first column for Gram Schmidt's factorisation does not need projecting.
 
 So for the first column, the algorithm will go straight to normalising as it does not need projecting. 
