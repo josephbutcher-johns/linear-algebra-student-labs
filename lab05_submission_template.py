@@ -56,6 +56,31 @@ def gram_schmidt_qr(A):
             v = v - R[i, j] * Q[:, i]
         R[j, j] = np.linalg.norm(v)As 
         Q[:, j] = v / R[j, j]
+
+    '''
+    Im including a long winded explanation of this so i know what i mean
+    For the TODO section of this function I started off with a loop using j as my value that is going to loop n times (the number of columns in A). So I am looping through the columns in short. 
+By using j (which automatically starts at 0) I make a copy of the matrix column so as not to edit the original matrix, which then allows me to carry on with my algorithm.
+As n is 2 (meaning j will do 0 then 1), on the first pass of the first for loop, the inner loop does not run, which is perfect because the first column for Gram Schmidt's factorisation does not need projecting.
+
+So for the first column, the algorithm will go straight to normalising as it does not need projecting. 
+Right now, V = A's first column so I use the built in function to calculate the length it and store it in R[j, j] which, at this point in time, is the top left corner of R.
+For Q, I then divide the v (the first column of A at this point in time) by the length that I calculated for R [j, j] and store that number in both rows of the first column of Q. Q now stores in its first column the normalised values. 
+
+My first loop now repeats with n being the second column of A so j = 1. 
+I then copy the second column of A into v.
+As j is now 1, my inner loop can computer for the first time. 
+I = 0 at this point in time also.
+This part of the loop then calculates the projection coefficient by doing the dot product of the first column that's just been stored in Q and the second column of A, which is stored in the top right of R.
+This has also allowed for the calculation of the perpendicular, by subtracting the projection from v(which is still the second column in A) and overwrites v to be the perpendicular. 
+The inner loop has now finished. As of right now, R has its top row filled in, and Q as the first column filled in. 
+
+The final two lines of the loop are then executed, with j = 1 this time. the length is calculated for our new v and stored in the bottom right of R. 
+This means that R is now complete, with our values in the upper triangle.
+We finally normalise for Q but this time for Q's second column and using R[1, 1].
+Q is now complete. 
+    '''
+
     return Q, R
 
 
@@ -76,7 +101,7 @@ def generate_table():
         error1 = np.linalg.norm(A - Q @ R)
         error2 = np.linalg.norm(Q.T @ Q - np.eye(A.shape[0]))
         error3 = np.linalg.norm(R - np.triu(R))
-        
+
         rows.append(
             {"eps": eps, "error1": error1, "error2": error2, "error3": error3}
         )
