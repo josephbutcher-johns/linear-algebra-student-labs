@@ -52,7 +52,7 @@ def gram_schmidt_qr(A):
     for j in range (n):
         v = A[:, j].copy()
         for i in range(j):
-            R[i, j]=np.dot(Q[:, j]), A[:, j])
+            R[i, j]=np.dot(Q[:, j], A[:, j])
             v = v - R[i, j] * Q[:, i]
         R[j, j] = np.linalg.norm(v)As 
         Q[:, j] = v / R[j, j]
